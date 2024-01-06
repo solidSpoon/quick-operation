@@ -1,15 +1,12 @@
-import { invoke } from "@tauri-apps/api/tauri"
-import type { NextPage } from "next"
-import Head from "next/head"
-import Image from "next/image"
-import { useCallback, useState } from "react"
+import Link from "next/link"
+import React, { useCallback } from "react"
 
-import { Card } from "@/components/Card"
-import { CardButton } from "@/components/CardButton"
+import Layout from "@/components/Layout"
+import { Button } from "@/components/ui/button"
 import { useGlobalShortcut } from "@/hooks/tauri/shortcuts"
-import { ResizableDemo } from "@/pages/ResizeableDemo"
+import { NextPageWithLayout } from "@/pages/_app"
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   // const [buttonDesc, setButtonDesc] = useState<string>(
   //   "Waiting to be clicked. This calls 'on_button_clicked' from Rust.",
   // )
@@ -28,7 +25,15 @@ const Home: NextPage = () => {
   }, [])
   useGlobalShortcut("CommandOrControl+P", shortcutHandler)
 
-  return <ResizableDemo />
+  return (
+    <Button asChild>
+      <Link href="/SplitVideo">Login</Link>
+    </Button>
+  )
+}
+
+Home.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>
 }
 
 export default Home
