@@ -1,4 +1,4 @@
-use chrono::{Duration, NaiveTime};
+use chrono::{ NaiveTime};
 use regex::Regex;
 
 use std::io::{self, BufRead};
@@ -142,19 +142,21 @@ fn split_video(file_holder: &FileHolder, time_stamp: &TimeStamp) -> io::Result<(
 
     let cmd = match time_stamp.end_time {
         Some(end_time) => format!(
-            "ffmpeg -i {} -ss {} -t {} -c copy {}",
-            file_holder.file_path,
+            "ffmpeg -ss {} -t {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
             time_stamp.start_time.format("%H:%M:%S"),
             end_time.signed_duration_since(time_stamp.start_time).num_seconds(),
+            file_holder.file_path,
             output_filename
         ),
         None => format!(
-            "ffmpeg -i {} -ss {} -c copy {}",
-            file_holder.file_path,
+            "ffmpeg -ss {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
             time_stamp.start_time.format("%H:%M:%S"),
+            file_holder.file_path,
             output_filename
         ),
     };
+
+    println!("cmd: {}", cmd);
 
     let status = std::process::Command::new("sh")
         .arg("-c")
