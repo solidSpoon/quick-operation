@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
 import type { NextPageWithLayout } from "./_app"
+import { ChevronRight, X, XSquare } from "lucide-react";
 
 const SplitVideo: NextPageWithLayout = () => {
   const [files, setFiles] = useState<string[]>([])
@@ -63,14 +64,24 @@ const SplitVideo: NextPageWithLayout = () => {
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead className="w-[100px]">Type</TableHead>
+              <TableHead className="w-[100px] text-center">Type</TableHead>
+              <TableHead className="w-[150px] text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {files.map((file) => (
               <TableRow>
                 <TableCell className="font-medium">{file}</TableCell>
-                <TableCell>Video</TableCell>
+                <TableCell className={'text-center'}>Video</TableCell>
+                <TableCell className={'text-center'}>
+                  <Button
+                    onClick={() => {
+                      setFiles((f) => f.filter((x) => x !== file))
+                    }}
+                    variant="outline" size="icon">
+                    <X   className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
