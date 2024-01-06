@@ -142,14 +142,14 @@ fn split_video(file_holder: &FileHolder, time_stamp: &TimeStamp) -> io::Result<(
 
     let cmd = match time_stamp.end_time {
         Some(end_time) => format!(
-            "ffmpeg -ss {} -t {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
+            "ffmpeg -y -ss {} -t {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
             time_stamp.start_time.format("%H:%M:%S"),
             end_time.signed_duration_since(time_stamp.start_time).num_seconds(),
             file_holder.file_path,
             output_filename
         ),
         None => format!(
-            "ffmpeg -ss {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
+            "ffmpeg -y -ss {} -accurate_seek -i {} -codec copy  -avoid_negative_ts 1 {}",
             time_stamp.start_time.format("%H:%M:%S"),
             file_holder.file_path,
             output_filename

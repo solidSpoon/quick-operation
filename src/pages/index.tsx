@@ -1,9 +1,10 @@
 import Link from "next/link"
-import React, { useCallback } from "react"
+import { redirect, RedirectType } from "next/navigation"
+import { useRouter } from "next/router"
+import React, { useEffect } from "react"
 
 import Layout from "@/components/Layout"
 import { Button } from "@/components/ui/button"
-import { useGlobalShortcut } from "@/hooks/tauri/shortcuts"
 import { NextPageWithLayout } from "@/pages/_app"
 
 const Home: NextPageWithLayout = () => {
@@ -20,15 +21,18 @@ const Home: NextPageWithLayout = () => {
   //     })
   // }
 
-  const shortcutHandler = useCallback(() => {
-    console.log("Ctrl+P was pressed!")
-  }, [])
-  useGlobalShortcut("CommandOrControl+P", shortcutHandler)
+  // const shortcutHandler = useCallback(() => {
+  //   console.log("Ctrl+P was pressed!")
+  // }, [])
+  // useGlobalShortcut("CommandOrControl+P", shortcutHandler)
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push("/SplitVideo").catch(() => {})
+  }, [router])
 
   return (
-    <Button asChild>
-      <Link href="/SplitVideo">Login</Link>
-    </Button>
+    <div className={"w-full h-full flex justify-center items-center"}>loading...</div>
   )
 }
 
