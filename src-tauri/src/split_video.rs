@@ -6,7 +6,7 @@ use std::path::PathBuf;
 
 
 
-pub fn split_file(file_names: Vec<String>, time_stamp: &str) -> () {
+pub fn split_file(file_names: Vec<String>, time_stamp: String) -> () {
     println!("time_stamp: {}", time_stamp);
     let lines = time_stamp.lines().map(|line| Line::from(line)).collect::<Vec<_>>();
     let time_stamps = TimeStamp::from(&lines);

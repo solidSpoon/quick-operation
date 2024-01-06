@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api"
 import { open } from "@tauri-apps/api/dialog"
 import React, { useState } from "react"
+import toast from "react-hot-toast"
 
 import Layout from "@/components/Layout"
 import { PageHeaderLayout } from "@/components/PageHeaderLayout"
@@ -30,7 +31,14 @@ const SplitVideo: NextPageWithLayout = () => {
   }
 
   const handleSplit = async () => {
-    await invoke<string>("split_file_name", { fileNames: files, timeStamp: text })
+    await toast.promise(
+      invoke<string>("split_file_name", { fileNames: files, timeStamp: text }),
+      {
+        loading: "Splitting...",
+        success: "Split Successfully",
+        error: "Split Failed",
+      },
+    )
   }
   return (
     <div

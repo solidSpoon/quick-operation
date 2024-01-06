@@ -19,10 +19,9 @@ fn on_button_clicked() -> String {
 }
 
 #[tauri::command]
-fn split_file_name(file_names: Vec<String>, time_stamp: &str) -> () {
-    split_file(file_names, time_stamp)
+async fn split_file_name(file_names: Vec<String>, time_stamp: String) {
+    tokio::task::spawn_blocking(|| split_file(file_names, time_stamp)).await.unwrap()
 }
-
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![on_button_clicked])
